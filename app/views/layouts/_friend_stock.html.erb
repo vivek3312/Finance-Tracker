@@ -1,0 +1,27 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">s.no</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Ticker</th>
+        <% if current_user.id == @user.id %>
+       <th scope="col">Action</th>
+       <%end%>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @tracked_stock %>
+  	  <% @tracked_stock.each do |stock| %>
+      <tr>
+        <th scope="row"><%=stock.id%></th>
+        <th scope="row"><%=stock.name%></th>
+        <td><%=stock.ticker%></td>
+        <td><%=stock.last_price%></td>
+        
+      </tr>
+      <% end %>
+    <%end%>
+  </tbody>
+</table>
+

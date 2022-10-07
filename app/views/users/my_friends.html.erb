@@ -1,0 +1,55 @@
+<h1>My Friends </h1>
+<div>
+	<%= form_tag search_friend_path, method: :get do |form| %>
+		<div class="row">
+			<div class="col-9">
+				<%= text_field_tag :friend, params[:friend], placeholder:"Enter your friends here", class:"form-control" %>
+			</div>
+			<div class="col-3">
+				<%= button_tag type: :submit, class:"btn btn-success" do  %>
+					<%= 'Search'%>
+				<%end%>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div class="row">
+	<div class="col-9">
+		<table class="table able-striped mt-4">
+			<thead>
+				<tr>
+			      <th scope="col">Email:</th>
+			      <th scope="col">Full Name</th>
+			      <th scope="col">Actions</th>
+		    	</tr>
+			</thead>
+			<tbody>
+<% if @friends %>
+<div class= "mt-5">
+				
+				<% @friends.each do |friend| %>
+				<tr>
+					<th><%=friend.email %></th>
+					<th><%=friend.full_name%></th>
+					<th>
+					<% if current_user.not_friend_with?(friend.id) %>	
+						<%= link_to 'Follow friend ?',friendships_path(friend: friend), class:"btn btn-success ml-4", method: :post %>
+					<%else%>
+						<div class="badge text-bg-secondary">already friend</div>
+					<%end%>
+						<%= link_to 'View friends ?',user_path(friend), class:"btn btn-success ml-4" %>
+
+					</th>
+				</tr>
+				<% end %>		
+			</div>
+			<%end%>
+		</tbody>
+		</table>
+	</div>
+</div>
+
+
+<% if @friends %>
+    <%= render 'layouts/friend' %>
+<%end%>    
